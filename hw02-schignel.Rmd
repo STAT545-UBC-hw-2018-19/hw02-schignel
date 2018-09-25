@@ -19,8 +19,8 @@ library(tidyverse)
 
 
 # Explore the data
-
-```{r}
+`str` 
+```{r Look at the structure of the data using the `str` function}
 str(gapminder) #use the `str` function
 ```
 
