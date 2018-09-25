@@ -21,7 +21,7 @@ library(tidyverse)
 
     ## Warning: package 'tidyverse' was built under R version 3.5.1
 
-    ## -- Attaching packages ------------------------------------------------- tidyverse 1.2.1 --
+    ## -- Attaching packages --------------------------------------------------------------------- tidyverse 1.2.1 --
 
     ## v ggplot2 3.0.0     v purrr   0.2.4
     ## v tibble  1.4.2     v dplyr   0.7.6
@@ -32,12 +32,14 @@ library(tidyverse)
 
     ## Warning: package 'dplyr' was built under R version 3.5.1
 
-    ## -- Conflicts ---------------------------------------------------- tidyverse_conflicts() --
+    ## -- Conflicts ------------------------------------------------------------------------ tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
 Explore the data
 ================
+
+`str`
 
 ``` r
 str(gapminder) #use the `str` function
