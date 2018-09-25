@@ -5,21 +5,15 @@ date: "September 24, 2018"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Install and load gapminder dataset
 
 ```{r}
-install.packages("gapminder")
 library(gapminder)
 ```
 
 # Install and load tidyverse (which includes dplyr)
 
 ```{r}
-install.packages("tidyverse")
 library(tidyverse)
 ```
 
