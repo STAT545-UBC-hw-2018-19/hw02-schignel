@@ -166,7 +166,7 @@ Let's explore how life expectancy varies across continents.
 
 ``` r
 cvsl <-select(gapminder, continent, lifeExp, pop) #Factor, #Number, and #Integer, respectively
-cvsl # continents vs life expactancy
+cvsl # continents vs life expectancy
 ```
 
     ## # A tibble: 1,704 x 3
@@ -220,33 +220,31 @@ ggplot(cvsl, aes(continent, lifeExp))+
 
 Interesting, we can see that, in the data period (1952-2007), there is a fairly large range for each continent, with the exception of Oceania. In fact, Oceania is on par with Europe, and is the only continent with a life expectancy completely above 65.
 
-I wonder if this has anything to do with it? ![*Perhaps this is a factor?*](https://1.bp.blogspot.com/-Wy4FQMvqW6A/T_8rRJ-gXcI/AAAAAAAAAOA/RuANW6ErQzE/s1600/beach-palm-tree-wallpaper.jpg)
+Perhaps *this* is a factor?
 
-R Markdown
-----------
+![](https://i.dailymail.co.uk/i/pix/2009/09/30/article-1217153-01B93CD5000004B0-430_468x286.jpg)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Filtering the data
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Suppose we wanted to visualize the relationship between **Life Expectancy** and **Gross Domestic Product per capita** in Europe and Africa over the last 50 years that we have data for:
+
+We can do this through filtering and piping the data into ggplot:
+
+#### Filter the data
 
 ``` r
-#Summarize the cars dataset
-summary(cars)
+select(gapminder, gdpPercap, lifeExp, pop, year, continent) %>% #subsetting data
+  filter(year > 1957, continent==c("Europe","Africa")) %>% #filtering by criteria
+  ggplot(aes(lifeExp, gdpPercap))+ #piped to ggplot
+  geom_point(aes(color=continent, size=pop, alpha=0.2)) + # add aesthetics 
+  xlab("Life Expectancy")+
+  ylab("GDP per Capita")
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+![](hw02-schignel_files/figure-markdown_github/piping-1.png)
 
-Including Plots
----------------
+Here we can see that most people in Africa tend to live much shorter lives, with less income, than people in Europe.
 
-You can also embed plots, for example:
+Still, we can see that this isn't a hard split. There are some clear outliers in both continents, and a fairly large overlap between the healthier, wealthier Africans and Europeans on the lower ends of the two scales.
 
-![](hw02-schignel_files/figure-markdown_github/pressure-1.png)
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Let's work for more overlap (preferably in the top right corner) in the next 50 years!

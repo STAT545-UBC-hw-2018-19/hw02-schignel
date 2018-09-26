@@ -95,7 +95,7 @@ Let's explore how life expectancy varies across continents.
 #### Select out one of each type of variable:
 ```{r select}
 cvsl <-select(gapminder, continent, lifeExp, pop) #Factor, #Number, and #Integer, respectively
-cvsl # continents vs life expactancy
+cvsl # continents vs life expectancy
 ```
 
 
@@ -122,34 +122,43 @@ ggplot(cvsl, aes(continent, lifeExp))+
 
 Interesting, we can see that, in the data period (1952-2007), there is a fairly large range for each continent, with the exception of Oceania. In fact, Oceania is on par with Europe, and is the only continent with a life expectancy completely above 65.
 
-I wonder if this has anything to do with it?
-![*Perhaps this is a factor?*](https://1.bp.blogspot.com/-Wy4FQMvqW6A/T_8rRJ-gXcI/AAAAAAAAAOA/RuANW6ErQzE/s1600/beach-palm-tree-wallpaper.jpg)
+Perhaps *this* is a factor?
 
+![](https://i.dailymail.co.uk/i/pix/2009/09/30/article-1217153-01B93CD5000004B0-430_468x286.jpg)
 
+### Filtering the data
 
+Suppose we wanted to visualize the relationship between **Life Expectancy** and **Gross Domestic Product per capita** in Europe and Africa over the last 50 years that we have data for:
 
+We can do this through filtering and piping the data into ggplot:
 
+#### Filter the data
 
-
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-#Summarize the cars dataset
-summary(cars)
+```{r piping}
+select(gapminder, gdpPercap, lifeExp, pop, year, continent) %>% #subsetting data
+  filter(year > 1957, continent=="Europe"|continent=="Africa") %>% #filter by criteria
+  ggplot(aes(lifeExp, gdpPercap))+ #piped to ggplot
+  geom_point(aes(color=continent, size=pop, alpha=0.1)) + # add aesthetics 
+  xlab("Life Expectancy")+
+  ylab("GDP per Capita")
 ```
 
-## Including Plots
+Here we can see that most people in Africa tend to live much shorter lives, with less income, than people in Europe. 
 
-You can also embed plots, for example:
+Still, we can see that this isn't a hard split. There are some clear outliers in both continents, and a fairly large overlap between the healthier, wealthier Africans and Europeans on the lower ends of the two scales.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Let's work for more overlap (preferably in the top right corner) in the next 50 years!
+
+### Extra thoughts
+Perhaps an analyst wants to filter the data just to Rwanda and Afghanistan. Did they succeed with the following code? 
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+While the above seems correct, it is unsuccessful because `c()` returns only data with the combination of the two countries. The correct way to do this is to use `|`.
+
+```{r}
+filter(gapminder, country=="Rwanda"|country=="Afghanistan")
+```
+Notice the much larger amount of data returned in the second filtering operation!
+
