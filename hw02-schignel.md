@@ -234,9 +234,9 @@ We can do this through filtering and piping the data into ggplot:
 
 ``` r
 select(gapminder, gdpPercap, lifeExp, pop, year, continent) %>% #subsetting data
-  filter(year > 1957, continent==c("Europe","Africa")) %>% #filtering by criteria
+  filter(year > 1957, continent=="Europe"|continent=="Africa") %>% #filter by criteria
   ggplot(aes(lifeExp, gdpPercap))+ #piped to ggplot
-  geom_point(aes(color=continent, size=pop, alpha=0.2)) + # add aesthetics 
+  geom_point(aes(color=continent, size=pop, alpha=0.1)) + # add aesthetics 
   xlab("Life Expectancy")+
   ylab("GDP per Capita")
 ```
@@ -248,3 +248,50 @@ Here we can see that most people in Africa tend to live much shorter lives, with
 Still, we can see that this isn't a hard split. There are some clear outliers in both continents, and a fairly large overlap between the healthier, wealthier Africans and Europeans on the lower ends of the two scales.
 
 Let's work for more overlap (preferably in the top right corner) in the next 50 years!
+
+### Extra thoughts
+
+Perhaps an analyst wants to filter the data just to Rwanda and Afghanistan. Did they succeed with the following code?
+
+``` r
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
+
+    ## # A tibble: 12 x 6
+    ##    country     continent  year lifeExp      pop gdpPercap
+    ##    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+    ##  1 Afghanistan Asia       1957    30.3  9240934      821.
+    ##  2 Afghanistan Asia       1967    34.0 11537966      836.
+    ##  3 Afghanistan Asia       1977    38.4 14880372      786.
+    ##  4 Afghanistan Asia       1987    40.8 13867957      852.
+    ##  5 Afghanistan Asia       1997    41.8 22227415      635.
+    ##  6 Afghanistan Asia       2007    43.8 31889923      975.
+    ##  7 Rwanda      Africa     1952    40    2534927      493.
+    ##  8 Rwanda      Africa     1962    43    3051242      597.
+    ##  9 Rwanda      Africa     1972    44.6  3992121      591.
+    ## 10 Rwanda      Africa     1982    46.2  5507565      882.
+    ## 11 Rwanda      Africa     1992    23.6  7290203      737.
+    ## 12 Rwanda      Africa     2002    43.4  7852401      786.
+
+While the above seems correct, it is unsuccessful because `c()` returns only data with the combination of the two countries. The correct way to do this is to use `|`.
+
+``` r
+filter(gapminder, country=="Rwanda"|country=="Afghanistan")
+```
+
+    ## # A tibble: 24 x 6
+    ##    country     continent  year lifeExp      pop gdpPercap
+    ##    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+    ##  1 Afghanistan Asia       1952    28.8  8425333      779.
+    ##  2 Afghanistan Asia       1957    30.3  9240934      821.
+    ##  3 Afghanistan Asia       1962    32.0 10267083      853.
+    ##  4 Afghanistan Asia       1967    34.0 11537966      836.
+    ##  5 Afghanistan Asia       1972    36.1 13079460      740.
+    ##  6 Afghanistan Asia       1977    38.4 14880372      786.
+    ##  7 Afghanistan Asia       1982    39.9 12881816      978.
+    ##  8 Afghanistan Asia       1987    40.8 13867957      852.
+    ##  9 Afghanistan Asia       1992    41.7 16317921      649.
+    ## 10 Afghanistan Asia       1997    41.8 22227415      635.
+    ## # ... with 14 more rows
+
+Notice the much larger amount of data returned in the second filtering operation!
