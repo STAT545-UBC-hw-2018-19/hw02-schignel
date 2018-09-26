@@ -14,7 +14,6 @@ The following exercise explores the **gapminder** dataset using a number of tool
 -   [Useful Dplyr Functions](https://www.r-bloggers.com/useful-dplyr-functions-wexamples/)
 -   [ggplot2 Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 -   [R Language Definition](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Objects)
--   [Tibbles](https://blog.rstudio.com/2016/03/24/tibble-1-0-0)
 
 Preparation
 -----------
@@ -89,8 +88,7 @@ tail(gapminder, 10)
     ##  9 Zimbabwe Africa     2002    40.0 11926563      672.
     ## 10 Zimbabwe Africa     2007    43.5 12311143      470.
 
-Take a closer look
-------------------
+### Take a closer look
 
 Let's dig deeper into `gapminder`.
 
@@ -110,6 +108,8 @@ class(gapminder)
 
     ## [1] "tbl_df"     "tbl"        "data.frame"
 
+More information about this class is available [here](https://blog.rstudio.com/2016/03/24/tibble-1-0-0).
+
 #### 3. How many columns/variables?
 
 ``` r
@@ -126,12 +126,20 @@ nrow(gapminder)
 
     ## [1] 1704
 
-### An easier way?
-
-We could also use `str` function to answer many of the previous questions:
+You could also use the `dim` function:
 
 ``` r
-str(gapminder)
+dim(gapminder) # `dim` stands for "dimensions""
+```
+
+    ## [1] 1704    6
+
+### A more "structured" approach
+
+You could also use `str` function to answer many of the previous questions:
+
+``` r
+str(gapminder) # `str` stands for "structure"
 ```
 
     ## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
@@ -142,7 +150,56 @@ str(gapminder)
     ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
     ##  $ gdpPercap: num  779 821 853 836 740 ...
 
-`str` also includes variable names, types, and examples of the data contents. This approach might be good as an initial check, but could also be overwhelming if you were only interested in knowing one aspect of the data.
+Notice that `str` also includes variable names, types, and examples of the data in each. This approach might be good as an initial check, but could also be overwhelming if you were only interested in knowing one aspect of the data.
+
+Variable exploration
+--------------------
+
+Let's explore how life expectancy across continents.
+
+#### Select out one of each type of variable:
+
+``` r
+cvsl <-select(gapminder, continent, lifeExp, pop) #Factor, #Number, and #Integer, respectively
+cvsl
+```
+
+    ## # A tibble: 1,704 x 3
+    ##    continent lifeExp      pop
+    ##    <fct>       <dbl>    <int>
+    ##  1 Asia         28.8  8425333
+    ##  2 Asia         30.3  9240934
+    ##  3 Asia         32.0 10267083
+    ##  4 Asia         34.0 11537966
+    ##  5 Asia         36.1 13079460
+    ##  6 Asia         38.4 14880372
+    ##  7 Asia         39.9 12881816
+    ##  8 Asia         40.8 13867957
+    ##  9 Asia         41.7 16317921
+    ## 10 Asia         41.8 22227415
+    ## # ... with 1,694 more rows
+
+Conduct a basic `summary` of the data:
+
+``` r
+summary(cvsl)
+```
+
+    ##     continent      lifeExp           pop           
+    ##  Africa  :624   Min.   :23.60   Min.   :6.001e+04  
+    ##  Americas:300   1st Qu.:48.20   1st Qu.:2.794e+06  
+    ##  Asia    :396   Median :60.71   Median :7.024e+06  
+    ##  Europe  :360   Mean   :59.47   Mean   :2.960e+07  
+    ##  Oceania : 24   3rd Qu.:70.85   3rd Qu.:1.959e+07  
+    ##                 Max.   :82.60   Max.   :1.319e+09
+
+Here we can see that there are **5 unique classes** (factors) included in the continent variable.
+
+The mininum life expectancy across all continents is **22.60**, and the max is **82.60**.
+
+The minimum population is **60,010** and the maximum population is **1,319,000,000**.
+
+Those are both very large ranges!
 
 R Markdown
 ----------
