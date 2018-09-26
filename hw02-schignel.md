@@ -220,7 +220,7 @@ ggplot(cvsl, aes(continent, lifeExp))+
 
 Interesting, we can see that, in the data period (1952-2007), there is a fairly large range for each continent, with the exception of Oceania. In fact, Oceania is on par with Europe, and is the only continent with a life expectancy completely above 65.
 
-I wonder if this has anything to do with it? ![*Perhaps this is a factor?*](https://media.giphy.com/media/ZEfxSNTqFx3yM/giphy.gif)
+I wonder if this has anything to do with it? ![*Perhaps this is a factor?*](https://1.bp.blogspot.com/-Wy4FQMvqW6A/T_8rRJ-gXcI/AAAAAAAAAOA/RuANW6ErQzE/s1600/beach-palm-tree-wallpaper.jpg)
 
 R Markdown
 ----------
