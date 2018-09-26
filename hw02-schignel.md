@@ -13,6 +13,8 @@ The following exercise explores the **gapminder** dataset using a number of tool
 -   [Dplyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 -   [Useful Dplyr Functions](https://www.r-bloggers.com/useful-dplyr-functions-wexamples/)
 -   [ggplot2 Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+-   [R Language Definition](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Objects)
+-   [Tibbles](https://blog.rstudio.com/2016/03/24/tibble-1-0-0)
 
 Preparation
 -----------
@@ -43,7 +45,90 @@ library(tidyverse)
 library(gapminder)
 ```
 
-### View the structure using the `str` function
+### Get familiar
+
+It's always a good idea to check the data, to make sure it's loading correctly and is what you think it is.
+
+The `head` function is a great way to do this. It returns the first 6 rows by default, or you can specify a number. Let's look at the first 10 rows:
+
+``` r
+head(gapminder, 10)
+```
+
+    ## # A tibble: 10 x 6
+    ##    country     continent  year lifeExp      pop gdpPercap
+    ##    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+    ##  1 Afghanistan Asia       1952    28.8  8425333      779.
+    ##  2 Afghanistan Asia       1957    30.3  9240934      821.
+    ##  3 Afghanistan Asia       1962    32.0 10267083      853.
+    ##  4 Afghanistan Asia       1967    34.0 11537966      836.
+    ##  5 Afghanistan Asia       1972    36.1 13079460      740.
+    ##  6 Afghanistan Asia       1977    38.4 14880372      786.
+    ##  7 Afghanistan Asia       1982    39.9 12881816      978.
+    ##  8 Afghanistan Asia       1987    40.8 13867957      852.
+    ##  9 Afghanistan Asia       1992    41.7 16317921      649.
+    ## 10 Afghanistan Asia       1997    41.8 22227415      635.
+
+The `tail` function is the same, but starts from the bottom of the dataset:
+
+``` r
+tail(gapminder, 10)
+```
+
+    ## # A tibble: 10 x 6
+    ##    country  continent  year lifeExp      pop gdpPercap
+    ##    <fct>    <fct>     <int>   <dbl>    <int>     <dbl>
+    ##  1 Zimbabwe Africa     1962    52.4  4277736      527.
+    ##  2 Zimbabwe Africa     1967    54.0  4995432      570.
+    ##  3 Zimbabwe Africa     1972    55.6  5861135      799.
+    ##  4 Zimbabwe Africa     1977    57.7  6642107      686.
+    ##  5 Zimbabwe Africa     1982    60.4  7636524      789.
+    ##  6 Zimbabwe Africa     1987    62.4  9216418      706.
+    ##  7 Zimbabwe Africa     1992    60.4 10704340      693.
+    ##  8 Zimbabwe Africa     1997    46.8 11404948      792.
+    ##  9 Zimbabwe Africa     2002    40.0 11926563      672.
+    ## 10 Zimbabwe Africa     2007    43.5 12311143      470.
+
+Take a closer look
+------------------
+
+Let's dig deeper into `gapminder`.
+
+#### 1. What type of object is it?
+
+``` r
+typeof(gapminder) 
+```
+
+    ## [1] "list"
+
+#### 2. What is its class?
+
+``` r
+class(gapminder)
+```
+
+    ## [1] "tbl_df"     "tbl"        "data.frame"
+
+#### 3. How many columns/variables?
+
+``` r
+ncol(gapminder)
+```
+
+    ## [1] 6
+
+#### 4. How many rows/observations?
+
+``` r
+nrow(gapminder)
+```
+
+    ## [1] 1704
+
+### An easier way?
+
+We could also use `str` function to answer many of the previous questions:
 
 ``` r
 str(gapminder)
@@ -57,23 +142,7 @@ str(gapminder)
     ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
     ##  $ gdpPercap: num  779 821 853 836 740 ...
 
-``` r
-typeof(gapminder$pop)
-```
-
-    ## [1] "integer"
-
-``` r
-typeof(gapminder)
-```
-
-    ## [1] "list"
-
-``` r
-class(gapminder)
-```
-
-    ## [1] "tbl_df"     "tbl"        "data.frame"
+`str` also includes variable names, types, and examples of the data contents. This approach might be good as an initial check, but could also be overwhelming if you were only interested in knowing one aspect of the data.
 
 R Markdown
 ----------

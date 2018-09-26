@@ -13,6 +13,8 @@ Below is a list of some helpful resources to refer to throughout this exercise (
 - [Dplyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 - [Useful Dplyr Functions](https://www.r-bloggers.com/useful-dplyr-functions-wexamples/)
 - [ggplot2 Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+- [R Language Definition](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Objects)
+- [Tibbles](https://blog.rstudio.com/2016/03/24/tibble-1-0-0)
 
 
 ## Preparation
@@ -29,23 +31,50 @@ library(tidyverse)
 library(gapminder)
 ```
 
-### View the structure using the `str` function
-```{r}
-str(gapminder)
-```
+### Get familiar
+It's always a good idea to check the data, to make sure it's loading correctly and is what you think it is.
+
+The `head` function is a great way to do this. It returns the first 6 rows by default, or you can specify a number. Let's look at the first 10 rows:
 
 ```{r}
-typeof(gapminder$pop)
+head(gapminder, 10)
 ```
 
+The `tail` function is the same, but starts from the bottom of the dataset:
 ```{r}
-typeof(gapminder)
+tail(gapminder, 10)
 ```
 
+
+## Take a closer look
+Let's dig deeper into `gapminder`.
+
+
+####1. What type of object is it?
+```{r}
+typeof(gapminder) 
+```
+
+####2. What is its class?
 ```{r}
 class(gapminder)
 ```
+####3. How many columns/variables?
+```{r}
+ncol(gapminder)
+```
+####4. How many rows/observations?
+```{r}
+nrow(gapminder)
+```
 
+### An easier way?
+We could also use `str` function to answer many of the previous questions:
+```{r}
+str(gapminder)
+```
+`str` also includes variable names, types, and examples of the data contents. 
+This approach might be good as an initial check, but could also be overwhelming if you were only interested in knowing one aspect of the data.
 
 
 
