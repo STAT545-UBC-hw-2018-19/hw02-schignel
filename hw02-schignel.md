@@ -18,25 +18,30 @@ The following exercise explores the **gapminder** dataset using a number of tool
 Preparation
 -----------
 
-### Load "tidyverse"
+### Load Packages
 
 Note: The tidyverse package includes the dplyr package!
 
 ``` r
 #install.packages("tidyverse")
+#install.packages("ggplot2")
 library(tidyverse)
 ```
 
-    ## -- Attaching packages --------------------------------------------------------------------- tidyverse 1.2.1 --
+    ## -- Attaching packages -------------------------------------------------- tidyverse 1.2.1 --
 
     ## v ggplot2 3.0.0     v purrr   0.2.5
     ## v tibble  1.4.2     v dplyr   0.7.6
     ## v tidyr   0.8.1     v stringr 1.3.1
     ## v readr   1.1.1     v forcats 0.3.0
 
-    ## -- Conflicts ------------------------------------------------------------------------ tidyverse_conflicts() --
+    ## -- Conflicts ----------------------------------------------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
+
+``` r
+library(ggplot2)
+```
 
 ### Load the data
 
@@ -155,13 +160,13 @@ Notice that `str` also includes variable names, types, and examples of the data 
 Variable exploration
 --------------------
 
-Let's explore how life expectancy across continents.
+Let's explore how life expectancy varies across continents.
 
 #### Select out one of each type of variable:
 
 ``` r
 cvsl <-select(gapminder, continent, lifeExp, pop) #Factor, #Number, and #Integer, respectively
-cvsl
+cvsl # continents vs life expactancy
 ```
 
     ## # A tibble: 1,704 x 3
@@ -179,7 +184,7 @@ cvsl
     ## 10 Asia         41.8 22227415
     ## # ... with 1,694 more rows
 
-Conduct a basic `summary` of the data:
+#### Conduct a basic `summary` of the data:
 
 ``` r
 summary(cvsl)
@@ -199,7 +204,23 @@ The mininum life expectancy across all continents is **22.60**, and the max is *
 
 The minimum population is **60,010** and the maximum population is **1,319,000,000**.
 
-Those are both very large ranges!
+Those are both very large ranges! Let's visualize them with a violin plot.
+
+#### Violin plot
+
+Use ggplot2 to generate a violin plot and overlay some jittered points:
+
+``` r
+ggplot(cvsl, aes(continent, lifeExp))+
+  geom_violin()+
+  geom_jitter(alpha=0.1)
+```
+
+![](hw02-schignel_files/figure-markdown_github/violin-1.png)
+
+Interesting, we can see that, in the data period (1952-2007), there is a fairly large range for each continent, with the exception of Oceania. In fact, Oceania is on par with Europe, and is the only continent with a life expectancy completely above 65.
+
+I wonder if this has anything to do with it? ![*Perhaps this is a factor?*](https://media.giphy.com/media/ZEfxSNTqFx3yM/giphy.gif)
 
 R Markdown
 ----------

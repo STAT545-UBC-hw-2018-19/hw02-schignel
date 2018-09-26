@@ -20,7 +20,7 @@ Below is a list of some helpful resources to refer to throughout this exercise (
 
 ### Load Packages
 Note: The tidyverse package includes the dplyr package!
-```{r}
+```{r install}
 #install.packages("tidyverse")
 #install.packages("ggplot2")
 library(tidyverse)
@@ -28,7 +28,7 @@ library(ggplot2)
 ```
 
 ### Load the data
-```{r}
+```{r load data}
 library(gapminder)
 ```
 
@@ -37,12 +37,12 @@ It's always a good idea to check the data, to make sure it's loading correctly a
 
 The `head` function is a great way to do this. It returns the first 6 rows by default, or you can specify a number. Let's look at the first 10 rows:
 
-```{r}
+```{r head}
 head(gapminder, 10)
 ```
 
 The `tail` function is the same, but starts from the bottom of the dataset:
-```{r}
+```{r tail}
 tail(gapminder, 10)
 ```
 
@@ -52,36 +52,36 @@ Let's dig deeper into `gapminder`.
 
 
 ####1. What type of object is it?
-```{r}
+```{r typeof}
 typeof(gapminder) 
 ```
 
 
 ####2. What is its class?
-```{r}
+```{r class}
 class(gapminder)
 ```
 More information about this class is available [here](https://blog.rstudio.com/2016/03/24/tibble-1-0-0).
 
 
 ####3. How many columns/variables?
-```{r}
+```{r ncol}
 ncol(gapminder)
 ```
 
 
 ####4. How many rows/observations?
-```{r}
+```{r nrow}
 nrow(gapminder)
 ```
 You could also use the `dim` function:
-```{r}
+```{r dim}
 dim(gapminder) # `dim` stands for "dimensions""
 ```
 
 ### A more "structured" approach
 You could also use `str` function to answer many of the previous questions:
-```{r}
+```{r str}
 str(gapminder) # `str` stands for "structure"
 ```
 Notice that `str` also includes variable names, types, and examples of the data in each. 
@@ -90,17 +90,17 @@ This approach might be good as an initial check, but could also be overwhelming 
 
 ## Variable exploration
 
-Let's explore how life expectancy across continents. 
+Let's explore how life expectancy varies across continents. 
 
 #### Select out one of each type of variable:
-```{r}
+```{r select}
 cvsl <-select(gapminder, continent, lifeExp, pop) #Factor, #Number, and #Integer, respectively
-cvsl
+cvsl # continents vs life expactancy
 ```
 
 
 #### Conduct a basic `summary` of the data:
-```{r}
+```{r summary}
 summary(cvsl)
 ```
 Here we can see that there are **5 unique classes** (factors) included in the continent variable. 
@@ -109,16 +109,21 @@ The mininum life expectancy across all continents is **22.60**, and the max is *
 
 The minimum population is **60,010** and the maximum population is **1,319,000,000**. 
 
-Those are both very large ranges!
+Those are both very large ranges! Let's visualize them with a violin plot.
 
 
-#### Plot the data
-Use ggplot2:
-```{r}
+#### Violin plot
+Use ggplot2 to generate a violin plot and overlay some jittered points:
+```{r violin}
 ggplot(cvsl, aes(continent, lifeExp))+
   geom_violin()+
-  geom_jitter(alpha=0.2)
+  geom_jitter(alpha=0.1)
 ```
+
+Interesting, we can see that, in the data period (1952-2007), there is a fairly large range for each continent, with the exception of Oceania. In fact, Oceania is on par with Europe, and is the only continent with a life expectancy completely above 65.
+
+I wonder if this has anything to do with it?
+![*Perhaps this is a factor?*](https://media.giphy.com/media/ZEfxSNTqFx3yM/giphy.gif)
 
 
 
