@@ -1,32 +1,38 @@
 ---
-title: "hw02-schignel"
+title: "Homework 02: Explore Gapminder and use dplyr"
 author: "Stephen Chignell"
 date: "September 24, 2018"
 output: github_document
 ---
+## Overview
+The following exercise explores the **gapminder** dataset using a number of tools in R. 
+Below is a list of some helpful resources to refer to throughout this exercise (and in the future!):
 
-# Install and load gapminder dataset
+- [Markdown Cheat Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+- [R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+- [Dplyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+- [Useful Dplyr Functions](https://www.r-bloggers.com/useful-dplyr-functions-wexamples/)
+- [ggplot2 Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
+
+## Preparation
+
+### Load "tidyverse"
+Note: The tidyverse package includes the dplyr package!
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+### Load the data
 ```{r}
 library(gapminder)
 ```
 
-# Install and load tidyverse (which includes dplyr)
-
+### View the structure using the `str` function
 ```{r}
-library(tidyverse)
+str(gapminder)
 ```
-
-
-# Explore the data
-`str` 
-```{r Look at the structure of the data using the `str` function}
-str(gapminder) #use the `str` function
-```
-
-## Here we see that it is a list and its class is 'tbl_df'
-## It has 6 variables, two Factors, two Integers, and two Numbers.
-## It has 1704 rows
 
 ```{r}
 typeof(gapminder$pop)
@@ -60,6 +66,7 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
+#Summarize the cars dataset
 summary(cars)
 ```
 

@@ -1,48 +1,52 @@
-hw02-schignel
+Homework 02: Explore Gapminder and use dplyr
 ================
 Stephen Chignell
 September 24, 2018
 
-Install and load gapminder dataset
-==================================
+Overview
+--------
+
+The following exercise explores the **gapminder** dataset using a number of tools in R. Below is a list of some helpful resources to refer to throughout this exercise (and in the future!):
+
+-   [Markdown Cheat Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+-   [R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+-   [Dplyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+-   [Useful Dplyr Functions](https://www.r-bloggers.com/useful-dplyr-functions-wexamples/)
+-   [ggplot2 Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+Preparation
+-----------
+
+### Load "tidyverse"
+
+Note: The tidyverse package includes the dplyr package!
 
 ``` r
-library(gapminder)
-```
-
-    ## Warning: package 'gapminder' was built under R version 3.5.1
-
-Install and load tidyverse (which includes dplyr)
-=================================================
-
-``` r
+#install.packages("tidyverse")
 library(tidyverse)
 ```
 
-    ## Warning: package 'tidyverse' was built under R version 3.5.1
-
     ## -- Attaching packages --------------------------------------------------------------------- tidyverse 1.2.1 --
 
-    ## v ggplot2 3.0.0     v purrr   0.2.4
+    ## v ggplot2 3.0.0     v purrr   0.2.5
     ## v tibble  1.4.2     v dplyr   0.7.6
     ## v tidyr   0.8.1     v stringr 1.3.1
     ## v readr   1.1.1     v forcats 0.3.0
-
-    ## Warning: package 'ggplot2' was built under R version 3.5.1
-
-    ## Warning: package 'dplyr' was built under R version 3.5.1
 
     ## -- Conflicts ------------------------------------------------------------------------ tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
-Explore the data
-================
-
-`str`
+### Load the data
 
 ``` r
-str(gapminder) #use the `str` function
+library(gapminder)
+```
+
+### View the structure using the `str` function
+
+``` r
+str(gapminder)
 ```
 
     ## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
@@ -52,15 +56,6 @@ str(gapminder) #use the `str` function
     ##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
     ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
     ##  $ gdpPercap: num  779 821 853 836 740 ...
-
-Here we see that it is a list and its class is 'tbl\_df'
---------------------------------------------------------
-
-It has 6 variables, two Factors, two Integers, and two Numbers.
----------------------------------------------------------------
-
-It has 1704 rows
-----------------
 
 ``` r
 typeof(gapminder$pop)
@@ -88,6 +83,7 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ``` r
+#Summarize the cars dataset
 summary(cars)
 ```
 
